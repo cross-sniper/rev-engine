@@ -1,17 +1,17 @@
 // vec.h
-typedef struct Vec2 {
+typedef struct Vector2 {
     float x, y;
-} Vec2;
+} Vector2;
 
-Vec2 operator+(Vec2 a, Vec2 b) {
-    Vec2 c = {
+Vector2 operator+(Vector2 a, Vector2 b) {
+    Vector2 c = {
         a.x + b.x,
         a.y + b.y
     };
     return c;
 }
 
-Vec2& operator+=(Vec2& a, const Vec2& b) {
+Vector2& operator+=(Vector2& a, const Vector2& b) {
     a.x += b.x;
     a.y += b.y;
     return a;
