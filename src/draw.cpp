@@ -1,6 +1,4 @@
 #include "draw.h"
-#include "zstd.h"
-#include <SDL2/SDL_render.h>
 
 float dt = 0;
 float lastTime = 0;
@@ -31,6 +29,10 @@ void DrawRectangle(int x, int y, int h, int w, SDL_Color color){
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_Rect rect = {x,y,w,h};
     SDL_RenderFillRect(renderer, &rect);
+}
+
+void DrawObject(Object obj, SDL_Color color){
+    DrawRectangle(obj.pos.x,obj.pos.y, obj.size.x, obj.pos.y, color);
 }
 
 float GetDrawTime() {

@@ -40,9 +40,15 @@ float GetScreenHeight();
 SDL_Window *GetWindowReference();
 SDL_Renderer *GetRendererReference();
 
+typedef struct Object
+{
+	Vector2 pos;
+	Vector2 size;
+	SDL_Color color;
+}Object;
 void ClearBackground(SDL_Color color);
 void DrawRectangle(int x, int y, int h, int w, SDL_Color color);
-
+void DrawObject(Object obj, SDL_Color color);
 
 void BeginDrawing();
 void EndDrawing();
@@ -106,6 +112,21 @@ enum KeyboardKey {
 
 bool IsKeyDown(int key);
 void UpdateKeyboardState(SDL_Event event);
+
+
+#if defined(__cplusplus)
+    #define CLITERAL(type)      type
+#else
+    #define CLITERAL(type)      (type)
+#endif
+
+#define LIGHTGRAY  CLITERAL(SDL_Color){ 200, 200, 200, 255 }   // Light Gray
+#define RED CLITERAL(SDL_Color){255,0,0,255} // Red
+
+#define WHITE      CLITERAL(SDL_Color){ 255, 255, 255, 255 }   // White
+#define BLACK      CLITERAL(SDL_Color){ 0, 0, 0, 255 }         // Black
+#define BLANK      CLITERAL(SDL_Color){ 0, 0, 0, 0 }           // Blank (Transparent)
+#define MAGENTA    CLITERAL(SDL_Color){ 255, 0, 255, 255 }     // Magenta
 
 
 #endif // ZSTD_H

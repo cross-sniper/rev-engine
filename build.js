@@ -82,5 +82,5 @@ function combine(files, outputFileName) {
 }
 
 // Example usage
-combine(["vec.h", "zstd.h", "draw.h", "keyboard.h"], 'zstd.h');
+combine(["vec.h", "zstd.h", "draw.h", "keyboard.h", "object.h", "colors.h"], 'zstd.h');
 combine(["zstd.cpp", "draw.cpp", "keyboard.cpp"], 'zstd.cpp');

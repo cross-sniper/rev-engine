@@ -169,9 +169,34 @@ void PoolEvents() {
     }
 }
 
+// vec.h
+typedef struct Vector2 {
+    float x, y;
+} Vector2;
+
+Vector2 operator+(Vector2 a, Vector2 b) {
+    Vector2 c = {
+        a.x + b.x,
+        a.y + b.y
+    };
+    return c;
+}
+
+Vector2& operator+=(Vector2& a, const Vector2& b) {
+    a.x += b.x;
+    a.y += b.y;
+    return a;
+}
+
+typedef struct Object
+{
+	Vector2 pos;
+	Vector2 size;
+	SDL_Color color;
+}Object;
 void ClearBackground(SDL_Color color);
 void DrawRectangle(int x, int y, int h, int w, SDL_Color color);
-
+void DrawObject(Object obj, SDL_Color color);
 
 void BeginDrawing();
 void EndDrawing();
@@ -207,6 +232,10 @@ void DrawRectangle(int x, int y, int h, int w, SDL_Color color){
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_Rect rect = {x,y,w,h};
     SDL_RenderFillRect(renderer, &rect);
+}
+
+void DrawObject(Object obj, SDL_Color color){
+    DrawRectangle(obj.pos.x,obj.pos.y, obj.size.x, obj.pos.y, color);
 }
 
 float GetDrawTime() {
