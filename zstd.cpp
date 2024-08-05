@@ -1,9 +1,30 @@
-#include <SDL2/SDL_keycode.h>
-#include <SDL2/SDL_pixels.h>
-#include <cstdio>
-#include <SDL2/SDL_video.h>
-#include <SDL2/SDL_render.h>
+// vec.h
+typedef struct Vector2 {
+    float x, y;
+} Vector2;
+
+Vector2 operator+(Vector2 a, Vector2 b);
+
+
+Vector2& operator+=(Vector2& a, const Vector2& b);
+
+Vector2 operator+(Vector2 a, Vector2 b) {
+    Vector2 c = {
+        a.x + b.x,
+        a.y + b.y
+    };
+    return c;
+}
+
+Vector2& operator+=(Vector2& a, const Vector2& b) {
+    a.x += b.x;
+    a.y += b.y;
+    return a;
+}
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_video.h>
+#include <cstdio>
 #define ERROR(fmt, ...) fprintf(stderr, "[ERROR] %s: " fmt "\n", __FUNCTION__, ##__VA_ARGS__);exit(1)
 
 
@@ -18,7 +39,6 @@ float GetScreenHeight();
 
 SDL_Window *GetWindowReference();
 SDL_Renderer *GetRendererReference();
-
 typedef struct KeyBoardKey {
     int key;
     bool state;
@@ -77,7 +97,6 @@ enum KeyboardKey {
 
 bool IsKeyDown(int key);
 void UpdateKeyboardState(SDL_Event event);
-
 SDL_Window * window = nullptr;
 SDL_Renderer* renderer = nullptr;
 
@@ -168,26 +187,7 @@ void PoolEvents() {
         }
     }
 }
-
-// vec.h
-typedef struct Vector2 {
-    float x, y;
-} Vector2;
-
-Vector2 operator+(Vector2 a, Vector2 b) {
-    Vector2 c = {
-        a.x + b.x,
-        a.y + b.y
-    };
-    return c;
-}
-
-Vector2& operator+=(Vector2& a, const Vector2& b) {
-    a.x += b.x;
-    a.y += b.y;
-    return a;
-}
-
+#include <SDL2/SDL_pixels.h>
 typedef struct Object
 {
 	Vector2 pos;
@@ -201,7 +201,6 @@ void DrawObject(Object obj, SDL_Color color);
 void BeginDrawing();
 void EndDrawing();
 float GetDrawTime();
-
 
 float dt = 0;
 float lastTime = 0;
@@ -241,7 +240,7 @@ void DrawObject(Object obj, SDL_Color color){
 float GetDrawTime() {
     return dt;
 }
-
+#include <SDL2/SDL_keycode.h>
 #define MAX_KEYBOARD_KEYS 256
 static KeyBoardKey keyboardKeys[MAX_KEYBOARD_KEYS];
 
@@ -263,4 +262,3 @@ void UpdateKeyboardState(SDL_Event event) {
         }
     }
 }
-

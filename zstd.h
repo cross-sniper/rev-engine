@@ -1,8 +1,3 @@
-#include <SDL2/SDL_pixels.h>
-#include <cstdio>
-#include <SDL2/SDL_video.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL.h>
 #ifndef ZSTD_H
 #define ZSTD_H
 
@@ -11,20 +6,14 @@ typedef struct Vector2 {
     float x, y;
 } Vector2;
 
-Vector2 operator+(Vector2 a, Vector2 b) {
-    Vector2 c = {
-        a.x + b.x,
-        a.y + b.y
-    };
-    return c;
-}
+Vector2 operator+(Vector2 a, Vector2 b);
 
-Vector2& operator+=(Vector2& a, const Vector2& b) {
-    a.x += b.x;
-    a.y += b.y;
-    return a;
-}
 
+Vector2& operator+=(Vector2& a, const Vector2& b);
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_video.h>
+#include <cstdio>
 #define ERROR(fmt, ...) fprintf(stderr, "[ERROR] %s: " fmt "\n", __FUNCTION__, ##__VA_ARGS__);exit(1)
 
 
@@ -39,7 +28,7 @@ float GetScreenHeight();
 
 SDL_Window *GetWindowReference();
 SDL_Renderer *GetRendererReference();
-
+#include <SDL2/SDL_pixels.h>
 typedef struct Object
 {
 	Vector2 pos;
@@ -53,7 +42,6 @@ void DrawObject(Object obj, SDL_Color color);
 void BeginDrawing();
 void EndDrawing();
 float GetDrawTime();
-
 typedef struct KeyBoardKey {
     int key;
     bool state;
@@ -113,7 +101,6 @@ enum KeyboardKey {
 bool IsKeyDown(int key);
 void UpdateKeyboardState(SDL_Event event);
 
-
 #if defined(__cplusplus)
     #define CLITERAL(type)      type
 #else
@@ -127,6 +114,5 @@ void UpdateKeyboardState(SDL_Event event);
 #define BLACK      CLITERAL(SDL_Color){ 0, 0, 0, 255 }         // Black
 #define BLANK      CLITERAL(SDL_Color){ 0, 0, 0, 0 }           // Blank (Transparent)
 #define MAGENTA    CLITERAL(SDL_Color){ 255, 0, 255, 255 }     // Magenta
-
 
 #endif // ZSTD_H
