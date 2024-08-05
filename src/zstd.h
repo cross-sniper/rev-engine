@@ -5,7 +5,7 @@
 #define ERROR(fmt, ...) fprintf(stderr, "[ERROR] %s: " fmt "\n", __FUNCTION__, ##__VA_ARGS__);exit(1)
 
 
-void CreateWindow(int width, int height, const char* title);
+void InitWindow(int width, int height, const char* title);
 void CloseWindow();
 void PoolEvents();
 

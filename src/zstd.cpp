@@ -8,7 +8,7 @@ SDL_Renderer* renderer = nullptr;
 bool shouldCloseWindow = false;
 
 
-void CreateWindow(int width, int height, const char *title){
+void InitWindow(int width, int height, const char *title){
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);

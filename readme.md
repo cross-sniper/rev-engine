@@ -40,7 +40,7 @@ void move(float dt){
 int main(){
 	// Creates a window with width 800, height 600, and title of "test"
 	// currently we cannot make a full screen window that takes up all of the space when a given number is 0(like raylib), because i have no clue how to do that with sdl
-    CreateWindow(800, 600, "test");
+    InitWindow(800, 600, "test");
     //the main loop of the game
     // WindowShoudClose returns if we need to close the window,
     // e.g: has the player pressed the X button on title bar? or has the player pressed ESCAPE?
