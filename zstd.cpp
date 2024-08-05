@@ -1,3 +1,4 @@
+#include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_pixels.h>
 #include <cstdio>
 #include <SDL2/SDL_video.h>
@@ -26,10 +27,13 @@ typedef struct KeyBoardKey{
 bool IsKeyDown(int key);
 void UpdateKeyboardState(SDL_Event event);
 
-
-
 SDL_Window * window = nullptr;
 SDL_Renderer* renderer = nullptr;
+
+
+bool shouldCloseWindow = false;
+
+
 void CreateWindow(int width, int height, const char *title){
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -48,9 +52,7 @@ void CreateWindow(int width, int height, const char *title){
 void CloseWindow(){
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
-
 	SDL_Quit();
-
 }
 
 float GetScreenWidth() {
@@ -86,11 +88,13 @@ SDL_Renderer* GetRendererReference(){
 	}
 	return renderer;
 }
+
 bool WindowShouldClose(){
 	if(not window){
 		ERROR("did you initialize the window?");
 	}
-	return window == nullptr; // if is not a nullptr, returns false
+
+	return shouldCloseWindow;
 }
 
 void PoolEvents() {
@@ -98,11 +102,13 @@ void PoolEvents() {
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_QUIT:
-                CloseWindow();
-                exit(0);
+            	shouldCloseWindow = true;
                 break;
             case SDL_KEYDOWN:
             case SDL_KEYUP:
+            	if(event.key.keysym.sym == SDLK_ESCAPE){
+            		shouldCloseWindow = true;
+            	}
             	UpdateKeyboardState(event);
             	break;
             // Handle other events here

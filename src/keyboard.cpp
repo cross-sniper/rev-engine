@@ -1,4 +1,5 @@
 #include "keyboard.h"
+#include <SDL2/SDL_keycode.h>
 #define MAX_KEYBOARD_KEYS 256
 static KeyBoardKey keyboardKeys[MAX_KEYBOARD_KEYS];
 
