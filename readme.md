@@ -3,6 +3,13 @@
 
 this is a game lib made arround sdl2, with function names similar to raylib's
 
+## how to build the header and implementation
+in the project, there is a "build.py", run it and it will automaticaly generate the `zstd.h` and `zstd.cpp`
+
+```sh
+python build.py
+```
+
 ## how to use
 ```cpp
 // includes the library
