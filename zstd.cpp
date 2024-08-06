@@ -29,6 +29,8 @@ Vector2& operator+=(Vector2& a, const Vector2& b) {
 
 
 void InitWindow(int width, int height, const char* title);
+void InitWindowFullscreen(const char* title);
+
 void CloseWindow();
 void PoolEvents();
 
@@ -99,10 +101,22 @@ bool IsKeyDown(int key);
 void UpdateKeyboardState(SDL_Event event);
 SDL_Window * window = nullptr;
 SDL_Renderer* renderer = nullptr;
-
-
 bool shouldCloseWindow = false;
 
+void InitWindowFullscreen(const char* title){
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	if(not window){
+		printf("something went wrong while creating the window: %s\n", SDL_GetError());
+		exit(1);
+	}
+	renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+	if(not renderer){
+		printf("something went wrong while creating the renderer: %s\n", SDL_GetError());
+		exit(1);
+	}
+}
 
 void InitWindow(int width, int height, const char *title){
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -196,12 +210,14 @@ typedef struct Object
 }Object;
 void ClearBackground(SDL_Color color);
 void DrawRectangle(int x, int y, int h, int w, SDL_Color color);
-void DrawObject(Object obj, SDL_Color color);
+void DrawText(const char* text, int x, int y, SDL_Color color);
+
+
+void DrawObject(Object obj);
 
 void BeginDrawing();
 void EndDrawing();
 float GetDrawTime();
-
 float dt = 0;
 float lastTime = 0;
 
@@ -226,15 +242,21 @@ void EndDrawing() {
     PoolEvents();
 }
 
-void DrawRectangle(int x, int y, int h, int w, SDL_Color color){
+void DrawRectangle(int x, int y, int w, int h, SDL_Color color){
 	SDL_Renderer* renderer = GetRendererReference();
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_Rect rect = {x,y,w,h};
     SDL_RenderFillRect(renderer, &rect);
 }
 
-void DrawObject(Object obj, SDL_Color color){
-    DrawRectangle(obj.pos.x,obj.pos.y, obj.size.x, obj.pos.y, color);
+void DrawObject(Object obj){
+    DrawRectangle(obj.pos.x,obj.pos.y, obj.size.x, obj.size.y, obj.color);
+}
+
+void DrawText(const char* text, int x, int y, SDL_Color color){
+    SDL_Renderer* renderer = GetRendererReference();
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
 }
 
 float GetDrawTime() {

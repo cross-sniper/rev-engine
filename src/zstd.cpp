@@ -3,10 +3,22 @@
 #include <SDL2/SDL_video.h>
 SDL_Window * window = nullptr;
 SDL_Renderer* renderer = nullptr;
-
-
 bool shouldCloseWindow = false;
 
+void InitWindowFullscreen(const char* title){
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	if(not window){
+		printf("something went wrong while creating the window: %s\n", SDL_GetError());
+		exit(1);
+	}
+	renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+	if(not renderer){
+		printf("something went wrong while creating the renderer: %s\n", SDL_GetError());
+		exit(1);
+	}
+}
 
 void InitWindow(int width, int height, const char *title){
 	SDL_Init(SDL_INIT_EVERYTHING);

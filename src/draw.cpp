@@ -1,5 +1,4 @@
 #include "draw.h"
-
 float dt = 0;
 float lastTime = 0;
 
@@ -24,15 +23,21 @@ void EndDrawing() {
     PoolEvents();
 }
 
-void DrawRectangle(int x, int y, int h, int w, SDL_Color color){
+void DrawRectangle(int x, int y, int w, int h, SDL_Color color){
 	SDL_Renderer* renderer = GetRendererReference();
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_Rect rect = {x,y,w,h};
     SDL_RenderFillRect(renderer, &rect);
 }
 
-void DrawObject(Object obj, SDL_Color color){
-    DrawRectangle(obj.pos.x,obj.pos.y, obj.size.x, obj.pos.y, color);
+void DrawObject(Object obj){
+    DrawRectangle(obj.pos.x,obj.pos.y, obj.size.x, obj.size.y, obj.color);
+}
+
+void DrawText(const char* text, int x, int y, SDL_Color color){
+    SDL_Renderer* renderer = GetRendererReference();
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
 }
 
 float GetDrawTime() {

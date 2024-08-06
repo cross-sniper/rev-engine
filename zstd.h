@@ -18,6 +18,8 @@ Vector2& operator+=(Vector2& a, const Vector2& b);
 
 
 void InitWindow(int width, int height, const char* title);
+void InitWindowFullscreen(const char* title);
+
 void CloseWindow();
 void PoolEvents();
 
@@ -37,7 +39,10 @@ typedef struct Object
 }Object;
 void ClearBackground(SDL_Color color);
 void DrawRectangle(int x, int y, int h, int w, SDL_Color color);
-void DrawObject(Object obj, SDL_Color color);
+void DrawText(const char* text, int x, int y, SDL_Color color);
+
+
+void DrawObject(Object obj);
 
 void BeginDrawing();
 void EndDrawing();
