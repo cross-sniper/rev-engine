@@ -4,6 +4,7 @@
 SDL_Window * window = nullptr;
 SDL_Renderer* renderer = nullptr;
 bool shouldCloseWindow = false;
+int exitKey = SDLK_ESCAPE;
 
 void InitWindowFullscreen(const char* title){
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -83,6 +84,11 @@ bool WindowShouldClose(){
 	return shouldCloseWindow;
 }
 
+void SetExitKey(int key)
+{
+	exitKey = key;
+}
+
 void PoolEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -92,10 +98,11 @@ void PoolEvents() {
                 break;
             case SDL_KEYDOWN:
             case SDL_KEYUP:
-            	if(event.key.keysym.sym == SDLK_ESCAPE){
+            	if(event.key.keysym.sym == exitKey){
             		shouldCloseWindow = true;
             	}
             	UpdateKeyboardState(event);
+            	UpdatePreviousKeyboardState();
             	break;
             // Handle other events here
             default:

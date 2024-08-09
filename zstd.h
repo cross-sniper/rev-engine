@@ -13,8 +13,15 @@ Vector2& operator+=(Vector2& a, const Vector2& b);
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
+#include <SDL2/SDL_image.h>
+
 #include <cstdio>
 #define ERROR(fmt, ...) fprintf(stderr, "[ERROR] %s: " fmt "\n", __FUNCTION__, ##__VA_ARGS__);exit(1)
+#ifdef DEBUG_LOG_ENABLED
+#define DEBUGLOG(fmt, ...) fprintf(stderr, "[ERROR] %s:%d:\n\t%s: " fmt "\n", __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__)
+#else
+#define DEBUGLOG(fmt, ...)
+#endif
 
 
 void InitWindow(int width, int height, const char* title);
@@ -28,6 +35,8 @@ bool WindowShouldClose();
 float GetScreenWidth();
 float GetScreenHeight();
 
+void SetExitKey(int key);
+
 SDL_Window *GetWindowReference();
 SDL_Renderer *GetRendererReference();
 #include <SDL2/SDL_pixels.h>
@@ -40,7 +49,8 @@ typedef struct Object
 void ClearBackground(SDL_Color color);
 void DrawRectangle(int x, int y, int h, int w, SDL_Color color);
 void DrawText(const char* text, int x, int y, SDL_Color color);
-
+void DrawCircle(int x, int y, int radius, SDL_Color color);
+void DrawFilledCircle(int x0, int y0, int radius, SDL_Color color);
 
 void DrawObject(Object obj);
 
@@ -104,6 +114,8 @@ enum KeyboardKey {
 };
 
 bool IsKeyDown(int key);
+bool IsKeyUp(int key);
+bool IsKeyPressed(int key);
 void UpdateKeyboardState(SDL_Event event);
 
 #if defined(__cplusplus)
@@ -114,10 +126,24 @@ void UpdateKeyboardState(SDL_Event event);
 
 #define LIGHTGRAY  CLITERAL(SDL_Color){ 200, 200, 200, 255 }   // Light Gray
 #define RED CLITERAL(SDL_Color){255,0,0,255} // Red
+#define GREEN CLITERAL(SDL_Color){0,255,0,255} // Green
+#define BLUE CLITERAL(SDL_Color){0,0,255,255} // Blue
 
 #define WHITE      CLITERAL(SDL_Color){ 255, 255, 255, 255 }   // White
 #define BLACK      CLITERAL(SDL_Color){ 0, 0, 0, 255 }         // Black
 #define BLANK      CLITERAL(SDL_Color){ 0, 0, 0, 0 }           // Blank (Transparent)
 #define MAGENTA    CLITERAL(SDL_Color){ 255, 0, 255, 255 }     // Magenta
+
+Vector2 getMousePos();
+
+// Define the Image struct to match your needs
+struct Image {
+    SDL_Surface* surface;
+    int width;
+    int height;
+};
+
+Image loadImage(const char* filePath);
+void drawImage(const Image& img, int x, int y);
 
 #endif // ZSTD_H

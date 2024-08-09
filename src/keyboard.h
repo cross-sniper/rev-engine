@@ -56,4 +56,6 @@ enum KeyboardKey {
 };
 
 bool IsKeyDown(int key);
+bool IsKeyUp(int key);
+bool IsKeyPressed(int key);
 void UpdateKeyboardState(SDL_Event event);
