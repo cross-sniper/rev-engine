@@ -102,7 +102,6 @@ void PoolEvents() {
             		shouldCloseWindow = true;
             	}
             	UpdateKeyboardState(event);
-            	UpdatePreviousKeyboardState();
             	break;
             // Handle other events here
             default:

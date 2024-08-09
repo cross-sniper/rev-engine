@@ -40,6 +40,7 @@ void UpdateKeyboardState(SDL_Event event) {
         keyboardKeys[key].state = false;
         DEBUGLOG("Key %i up\n", key);
     }
+	UpdatePreviousKeyboardState();
 }
 
 void UpdatePreviousKeyboardState() {
