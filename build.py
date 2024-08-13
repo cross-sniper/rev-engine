@@ -52,7 +52,7 @@ def combine_files(files, output_file_name):
     included_headers.clear()
     header_content = ""
 
-    is_header_file = output_file_name.endswith(".h")
+    is_header_file = output_file_name.endswith(".hpp")
     guard_macro = output_file_name.replace(".", "_").upper()
 
     if is_header_file:
@@ -74,31 +74,6 @@ def combine_files(files, output_file_name):
 
 
 combine_files(
-    [
-        "vec.h",
-        "zstd.h",
-        "draw.h",
-        "keyboard.h",
-        "object.h",
-        "colors.h",
-        "mouse.h",
-        "Image.h",
-    ],
-    "zstd.h",
+    os.listdir("src"),
+    "zstd.hpp",
 )
-
-combine_files(
-    ["vec.cpp", "draw.cpp", "keyboard.cpp", "mouse.cpp", "Image.cpp","zstd.cpp"],
-    "zstd.cpp",
-)
-
-if "-c" in sys.argv:
-    print("compiling to .a")
-    cmds = [
-        "g++ zstd.cpp -c -o zstd.o " + "-D DEBUG_LOG_ENABLED" if "-d" in sys.argv else "",
-        "ar rcs libzstd.a zstd.o",  # Create the static library
-    ]
-
-    for cmd in cmds:
-        print(cmd)
-        os.system(cmd)
